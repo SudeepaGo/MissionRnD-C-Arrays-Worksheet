@@ -14,6 +14,7 @@ NOTES:
 */
 
 #include <stdio.h>
+#include<stdlib.h>
 
 struct student {
 	char name[10];
@@ -21,5 +22,21 @@ struct student {
 };
 
 void * scoresDescendingSort(struct student *students, int len) {
-	return NULL;
+	int i,j;
+	struct student temp;
+	if (students == NULL || len < 0) return NULL;
+	//struct student *students = (struct student*)malloc(sizeof(struct student*)*len);
+	for (i = 0; i < len - 1;i++)
+	{
+		for (j = 0; j < len - i - 1; j++)
+		{
+			if (students[j + 1].score > students[j].score)
+			{
+				temp = students[j + 1];
+				students[j + 1] = students[j];
+				students[j] = temp;
+			}
+		}
+	
+	}
 }
