@@ -15,33 +15,40 @@ NOTES:
 
 #include <iostream>
 #include <malloc.h>
-
+void sort(struct student *, int);
 struct student {
 	char *name;
 	int score;
 };
-
 struct student  **topKStudents(struct student *students, int len, int K) {
-	int i=0, j,l;
-	struct student temp;
+	int l;
 	struct student **result = (struct student **)calloc(sizeof(struct student **),K);
-	if (students == NULL || len < 0 || K<=0) return NULL;
+	if (students == NULL || len < 0 || K <= 0) return NULL;
+		sort(students, len);
+		for (l = 0; l < K; l++)
+		{
+			result[l] = &students[l];
+		}
+	return result;
+}
+void swap(struct student *students, int k1,int k2)
+{
+	struct student temp;
+	temp = students[k1];
+	students[k1] = students[k2];
+	students[k2] = temp;
+}
+void sort(struct student *students, int len)
+{
+	int i, j;
 	for (i = 0; i < len - 1; i++)
 	{
 		for (j = 0; j < len - i - 1; j++)
 		{
 			if (students[j + 1].score > students[j].score)
-			{
-				temp = students[j + 1];
-				students[j + 1] = students[j];
-				students[j] = temp;
-			}
+				swap(students,j+1,j);
 		}
 
 	}
-	for (l = 0; l < K; l++)
-	{
-		result[l] = &students[l];
-	}	
-	return result;
+	
 }

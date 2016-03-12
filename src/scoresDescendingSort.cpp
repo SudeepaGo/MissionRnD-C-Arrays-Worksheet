@@ -15,28 +15,34 @@ NOTES:
 
 #include <stdio.h>
 #include<stdlib.h>
-
+void sort_student_scores(struct student *, int);
 struct student {
 	char name[10];
 	int score;
 };
 
 void * scoresDescendingSort(struct student *students, int len) {
-	int i,j;
-	struct student temp;
 	if (students == NULL || len < 0) return NULL;
-	//struct student *students = (struct student*)malloc(sizeof(struct student*)*len);
-	for (i = 0; i < len - 1;i++)
+	sort_student_scores(students, len);
+}
+void swap_student_scores(struct student *students, int k1, int k2)
+{
+	struct student temp;
+	temp = students[k1];
+	students[k1] = students[k2];
+	students[k2] = temp;
+}
+void sort_student_scores(struct student *students, int len)
+{
+	int i, j;
+	for (i = 0; i < len - 1; i++)
 	{
 		for (j = 0; j < len - i - 1; j++)
 		{
 			if (students[j + 1].score > students[j].score)
-			{
-				temp = students[j + 1];
-				students[j + 1] = students[j];
-				students[j] = temp;
-			}
+				swap_student_scores(students, j + 1, j);
 		}
-	
+
 	}
+
 }
